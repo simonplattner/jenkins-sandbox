@@ -90,6 +90,9 @@ pipeline {
               }
             }
             stage('Nested 2') {
+              when {
+                triggeredBy 'SCMTrigger'
+              }
               steps {
                 echo "In stage Nested 2 within Branch C"
               }
@@ -99,6 +102,9 @@ pipeline {
       }
     }
     stage('Non-Parallel Stage 2') {
+      when {
+        triggeredBy 'TimerTrigger'
+      }
       steps {
         echo 'This stage will be executed first.'
       }
