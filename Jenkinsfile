@@ -94,7 +94,7 @@ pipeline {
                 triggeredBy 'SCMTrigger'
               }
               steps {
-                echo "In stage Nested 2 within Branch C"
+                echo "some scm trigger!"
               }
             }
           }
