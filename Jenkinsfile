@@ -63,6 +63,9 @@ pipeline {
 //      when {
 //        branch 'main'
 //      }
+      timeout {
+        timeout(time: 30, unit: 'SECONDS')
+      }
       input {
         message "Should we continue?"
         ok "Yes, we should."
