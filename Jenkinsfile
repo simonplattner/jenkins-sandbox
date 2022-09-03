@@ -27,11 +27,11 @@ pipeline {
 
   stages {
     stage('Parallel Stage 1') {
-      when {
-        not {
-          branch 'main'
-        }
-      }
+//      when {
+//        not {
+//          branch 'main'
+//        }
+//      }
       parallel {
         stage('Branch A') {
           steps {
