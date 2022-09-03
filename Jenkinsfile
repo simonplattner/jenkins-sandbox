@@ -95,4 +95,15 @@ pipeline {
       }
     }
   }
+  post {
+    success {
+      echo 'test success!'
+    }
+    always {
+      echo 'I will always say Hello again!'
+    }
+    success {
+      echo 'test success!'
+    }
+  }
 }
