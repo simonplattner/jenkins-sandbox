@@ -4,9 +4,12 @@ pipeline {
 
   options {
     buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
+    parallelsAlwaysFailFast()
+    quietPeriod(0)
     skipDefaultCheckout()
     skipStagesAfterUnstable()
     timeout(time: 5, unit: 'MINUTES')
+    timestamps()
   }
 
   triggers {
