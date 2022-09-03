@@ -26,6 +26,11 @@ pipeline {
 
   stages {
     stage('Parallel Stage 1') {
+      when {
+        not {
+          branch 'main'
+        }
+      }
       parallel {
         stage('Branch A') {
           steps {
@@ -54,6 +59,9 @@ pipeline {
       }
     }
     stage('Non-Parallel Stage 1') {
+      when {
+        branch 'main'
+      }
       steps {
         echo "Hello ${params.PERSON}"
         echo "Biography: ${params.BIOGRAPHY}"
