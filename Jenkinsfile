@@ -13,9 +13,9 @@ pipeline {
     timestamps()
   }
 
-  triggers {
-    cron('* * * * *')
-  }
+//  triggers {
+//    cron('* * * * *')
+//  }
 
   parameters {
     string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
@@ -60,8 +60,19 @@ pipeline {
       }
     }
     stage('Non-Parallel Stage 1') {
-      when {
-        branch 'main'
+//      when {
+//        branch 'main'
+//      }
+      options {
+        timeout(time: 30, unit: 'SECONDS')
+      }
+      input {
+        message "Should we continue?"
+        ok "Yes, we should."
+        submitter "alice,bob"
+        parameters {
+          string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+        }
       }
       steps {
         echo "Hello ${params.PERSON}"
@@ -90,8 +101,11 @@ pipeline {
               }
             }
             stage('Nested 2') {
+              when {
+                triggeredBy 'SCMTrigger'
+              }
               steps {
-                echo "In stage Nested 2 within Branch C"
+                echo "some scm trigger!"
               }
             }
           }
@@ -99,6 +113,9 @@ pipeline {
       }
     }
     stage('Non-Parallel Stage 2') {
+      when {
+        triggeredBy 'TimerTrigger'
+      }
       steps {
         echo 'This stage will be executed first.'
       }
