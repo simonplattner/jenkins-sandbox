@@ -26,6 +26,11 @@ pipeline {
   }
 
   stages {
+    stage('Cleanup') {
+      steps {
+        cleanWs()
+      }
+    }
     stage('Parallel Stage 1') {
 //      when {
 //        not {
@@ -66,14 +71,14 @@ pipeline {
       options {
         timeout(time: 30, unit: 'SECONDS')
       }
-      input {
-        message "Should we continue?"
-        ok "Yes, we should."
-        submitter "alice,bob"
-        parameters {
-          string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-        }
-      }
+//      input {
+//        message "Should we continue?"
+//        ok "Yes, we should."
+//        submitter "alice,bob"
+//        parameters {
+//          string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+//        }
+//      }
       steps {
         echo "Hello ${params.PERSON}"
         echo "Biography: ${params.BIOGRAPHY}"
@@ -91,6 +96,7 @@ pipeline {
         stage('Branch B') {
           steps {
             echo "On Branch B"
+//            unstable 'nah...'
           }
         }
         stage('Branch C') {
@@ -101,9 +107,9 @@ pipeline {
               }
             }
             stage('Nested 2') {
-              when {
-                triggeredBy 'SCMTrigger'
-              }
+//              when {
+//                triggeredBy 'SCMTrigger'
+//              }
               steps {
                 echo "some scm trigger!"
               }
@@ -113,11 +119,28 @@ pipeline {
       }
     }
     stage('Non-Parallel Stage 2') {
-      when {
-        triggeredBy 'TimerTrigger'
-      }
+//      when {
+//        triggeredBy 'TimerTrigger'
+//      }
       steps {
         echo 'This stage will be executed first.'
+        sh 'touch somefile.txt'
+        sh '''
+cat <<EOF > TEST-com.github.SandboxTest.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.github.SandboxTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-09-03T21:18:38" hostname="hostname" time="0.091">
+  <properties/>
+  <testcase name="findPrime()" classname="com.github.SandboxTest" time="0.091"/>
+  <system-out><![CDATA[486847
+Took: 14ms
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+EOF
+        '''
+        archiveArtifacts artifacts: '*.txt', fingerprint: true
+        archiveArtifacts artifacts: '*.xml', fingerprint: true
+        junit '*.xml'
       }
     }
   }
