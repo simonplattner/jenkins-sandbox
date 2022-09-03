@@ -4,6 +4,7 @@ pipeline {
 
   options {
     buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
+    durabilityHint('PERFORMANCE_OPTIMIZED')
     parallelsAlwaysFailFast()
     quietPeriod(0)
     skipDefaultCheckout()
