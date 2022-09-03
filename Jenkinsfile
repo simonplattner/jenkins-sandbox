@@ -63,10 +63,8 @@ pipeline {
 //      when {
 //        branch 'main'
 //      }
-      timeout {
-        options {
-          timeout(time: 30, unit: 'SECONDS')
-        }
+      options {
+        timeout(time: 30, unit: 'SECONDS')
       }
       input {
         message "Should we continue?"
