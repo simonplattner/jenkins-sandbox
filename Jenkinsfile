@@ -10,7 +10,7 @@ pipeline {
   }
 
   stages {
-    stage('Parallel Stage') {
+    stage('Parallel Stage 1') {
       parallel {
         stage('Branch A') {
           steps {
@@ -38,12 +38,12 @@ pipeline {
         }
       }
     }
-    stage('Non-Parallel Stage') {
+    stage('Non-Parallel Stage 1') {
       steps {
         echo 'This stage will be executed first.'
       }
     }
-    stage('Parallel Stage') {
+    stage('Parallel Stage 2') {
       parallel {
         stage('Branch A') {
           steps {
@@ -71,7 +71,7 @@ pipeline {
         }
       }
     }
-    stage('Non-Parallel Stage') {
+    stage('Non-Parallel Stage 2') {
       steps {
         echo 'This stage will be executed first.'
       }
