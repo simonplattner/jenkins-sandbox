@@ -3,10 +3,14 @@ pipeline {
   agent any
 
   options {
-    buildDiscarder(logRotator(numToKeepStr: '1', artifactNumToKeepStr: '1'))
+    buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
     skipDefaultCheckout()
     skipStagesAfterUnstable()
     timeout(time: 5, unit: 'MINUTES')
+  }
+
+  triggers {
+    cron('* * * * *')
   }
 
   parameters {
