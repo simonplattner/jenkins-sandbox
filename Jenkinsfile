@@ -150,14 +150,13 @@ EOF
           nexusVersion: 'nexus3',
           protocol: 'http',
           nexusUrl: 'nexus/8081',
-          groupId: 'com.example',
+          groupId: 'groupid',
           version: '1.2.3',
           repository: 'sandbox',
           credentialsId: 'nexus-credentials',
           artifacts: [
             [
               artifactId: 'artifactId',
-              classifier: '',
               file      : 'somefile.txt',
               type      : 'txt'
             ]
